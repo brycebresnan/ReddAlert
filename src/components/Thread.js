@@ -1,12 +1,12 @@
 
 function Thread(props) {
-  const active = props.online / props.memebrs
+  const activePercent = props.online / props.memebrs
   return (
     <>
-      <h3>Subreddit name: {props.threadName} </h3>
-      <h3>Members: {props.members}</h3>
-      <h3>Online: {props.online}</h3>
-      <h4>Active: {active}% </h4>
+      <h3>Subreddit name: {props.displayName} </h3>
+      <h3>Members: {props.subscribers}</h3>
+      <h3>Online: {props.accounsActive}</h3>
+      <h4>Active: {activePercent}% </h4>
     </>
   );
 }
