@@ -1,9 +1,21 @@
 import React from "react";
 
-function NewThreadForm(props){
+function NewThreadForm(){
+
+  function handleNewThreadFormSubmission(event) {
+    event.preventDetault();
+    
+  }
+
   return (
     <React.Fragment>
-      <h3>This is a form.</h3>
+      <form onSubmit={handleNewThreadFormSubmission}>
+        <input
+          type='text'
+          name='subredditName'
+          placeholder='Name of Subreddit...' />
+        <button type='submit'>Add Subreddit</button>
+      </form>
     </React.Fragment>
   );
 }
