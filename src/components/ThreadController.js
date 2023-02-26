@@ -12,17 +12,30 @@ class ThreadController extends React.Component {
     };
   }
 
+  handleClick = () => {
+    this.setState(prevState => ({
+      formVisibleOnPage: !prevState.formVisibleOnPage
+    }));
+  }
+
+
+
   render(){
     let currentlyVisisbleState = null;
+    let buttonText = null;
+
     if (this.state.formVisibleOnPage) {
       currentlyVisisbleState = <NewThreadForm />
+      buttonText = "Return to Thread List"
     } else {
       currentlyVisisbleState = <ThreadList />
+      buttonText = "Add Thread"
     }
   
     return(
       <React.Fragment>
         {currentlyVisisbleState}
+        <button onClick={this.handleClick}>{buttonText}</button>
       </React.Fragment>
     );
   }
