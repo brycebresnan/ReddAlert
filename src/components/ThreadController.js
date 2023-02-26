@@ -1,5 +1,4 @@
 import ThreadList from "./ThreadList"
-import Thread from "./Thread";
 import React from 'react';
 import NewThreadForm from "./NewThreadForm";
 
@@ -8,7 +7,8 @@ class ThreadController extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      mainThreadList: []
     };
   }
 
@@ -18,8 +18,6 @@ class ThreadController extends React.Component {
     }));
   }
 
-
-
   render(){
     let currentlyVisisbleState = null;
     let buttonText = null;
@@ -28,7 +26,7 @@ class ThreadController extends React.Component {
       currentlyVisisbleState = <NewThreadForm />
       buttonText = "Return to Thread List"
     } else {
-      currentlyVisisbleState = <ThreadList />
+      currentlyVisisbleState = <ThreadList threadList={this.state.mainThreadList} />
       buttonText = "Add Thread"
     }
   
