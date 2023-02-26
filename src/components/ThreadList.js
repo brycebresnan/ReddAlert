@@ -1,3 +1,4 @@
+import Thread from "./Thread";
 
 function ThreadList() {
   return (
