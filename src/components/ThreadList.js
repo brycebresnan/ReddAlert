@@ -1,17 +1,18 @@
 import React from "react";
 import Thread from "./Thread";
-import PropTypes from "react";
+import PropTypes from "prop-types";
 
 function ThreadList(props) {
 
   return (
     <React.Fragment>
-    {props.threadList.map((thread, index) => 
-      <Thread displayName={thread.displayName}
-      accountsActive={thread.accountsActive}
-      subscribers={thread.subscribers}
-      key={index} />
-      )}
+      {props.threadList.map((thread) => 
+        <Thread displayName={thread.displayName}
+          accountsActive={thread.accountsActive}
+          subscribers={thread.subscribers}
+          id={thread.id}
+          key={thread.id}/>
+        )}
     </React.Fragment>
 
   );
