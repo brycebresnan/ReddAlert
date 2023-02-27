@@ -18,6 +18,7 @@ Thread.propTypes = {
   displayName: PropTypes.string,
   subscribers: PropTypes.number,
   accountsActive: PropTypes.number,
+  id: PropTypes.string
 }
 
 export default Thread;
