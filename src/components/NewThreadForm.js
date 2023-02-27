@@ -1,10 +1,17 @@
 import React from "react";
+import { v4 } from 'uuid';
+import PropTypes from "prop-types";
 
-function NewThreadForm(){
+function NewThreadForm(props){
 
   function handleNewThreadFormSubmission(event) {
-    event.preventDetault();
-    
+    event.preventDefault();
+    props.onNewThreadCreation({
+      displayName: event.target.subredditName.value,
+      subscribers: parseInt(100),
+      accountsActive: parseInt(23),
+      id: v4()
+    });
   }
 
   return (
@@ -19,5 +26,9 @@ function NewThreadForm(){
     </React.Fragment>
   );
 }
+
+NewThreadForm.propTypes = {
+  onNewThreadCreation: PropTypes.func
+};
 
 export default NewThreadForm;
