@@ -18,12 +18,18 @@ class ThreadController extends React.Component {
     }));
   }
 
+  handleAddingNewThreadToList = (newThread) => {
+    const newMainThreadList = this.state.mainThreadList.concat(newThread); 
+    this.setState({mainThreadList: newMainThreadList,
+                  formVisibleOnPage: false });
+  }
+
   render(){
     let currentlyVisisbleState = null;
     let buttonText = null;
 
     if (this.state.formVisibleOnPage) {
-      currentlyVisisbleState = <NewThreadForm />
+      currentlyVisisbleState = <NewThreadForm onNewThreadCreation={this.handleAddingNewThreadToList}/>
       buttonText = "Return to Thread List"
     } else {
       currentlyVisisbleState = <ThreadList threadList={this.state.mainThreadList} />
