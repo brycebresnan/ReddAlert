@@ -23,3 +23,26 @@ export async function getAuthToken() {
     return error.message
   });
 }
+
+
+export async function apiCaller(subreddit, token) {
+  if (token == null) {
+    return "Please update Authentication token"
+  }
+  await fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `bearer ${token}`}})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      } else {
+        return response.json()
+      }
+    })
+  .then((jsonifiedResponse) => {
+      setData(jsonifiedResponse.data)
+      setIsLoaded(true)
+    })
+  .catch((error) => {
+    setError(error.message)
+    setIsLoaded(true)
+  });
+}
