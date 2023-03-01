@@ -1,8 +1,10 @@
 export async function getAuthToken() {
+  const encodedKey = btoa(`${REACT_APP_APP_ID}:${REACT_APP_SECRET}`)
+
   await fetch(`https://www.reddit.com/api/v1/access_token`, {
     method:"POST",
     headers: {
-    'Authorization': `${REACT_APP_API_KEY}`,
+    'Authorization': `Basic ${encodedKey}`,
     'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: new URLSearchParams({
@@ -17,7 +19,7 @@ export async function getAuthToken() {
       }
     })
   .then((jsonifiedResponse) => {
-      return jsonifiedResponse
+      return jsonifiedResponse.access_token
     })
   .catch((error) => {
     return error.message
