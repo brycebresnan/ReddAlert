@@ -7,23 +7,22 @@ function SubredditData() {
   const [tokenError, setTokenError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const [token, setToken] = useState(null)
-
-  const threadList = ["cats", "dogs", "brewing"]
+  const [token, setToken] = useState(null);
+  const [threadList, setThreadList] = useState(["cats", "dogs", "brewing"]);
 
   useEffect(() => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
 
     fetch(`https://www.reddit.com/api/v1/access_token`, {
-    method:"POST",
-    headers: {
-    'Authorization': `Basic ${encodedKey}`,
-    'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams({
-      'grant_type': 'client_credentials'
+      method:"POST",
+      headers: {
+      'Authorization': `Basic ${encodedKey}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        'grant_type': 'client_credentials'
+      })
     })
-  })
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status}: ${response.statusText}`);
@@ -31,15 +30,24 @@ function SubredditData() {
         return response.json()
       }
     })
-  .then((jsonifiedResponse) => {
-    setToken(jsonifiedResponse.access_token)
-    })
-  .catch((error) => {
-    setTokenError(error.message)
-  });  
-    }, [])
+    .then((jsonifiedResponse) => {
+      setToken(jsonifiedResponse.access_token)
+      })
+    .catch((error) => {
+      setTokenError(error.message)
+    });  
+
+    apiCallLoop(threadList);
+
+  }, [])
+
 
   const handleMakeApiCall = (subreddit) => {
+    if (token == null) {
+      setTokenError("Authentication Token missing or undefined")
+      return
+    }
+    
     fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${token}`}})
     .then(response => {
       if (!response.ok) {
@@ -49,8 +57,8 @@ function SubredditData() {
       }
     })
     .then((jsonifiedResponse) => {
-        setData(prevArray  => [...prevArray, jsonifiedResponse.data])
-        setIsLoaded(true)
+      setData(prevArray  => [...prevArray, jsonifiedResponse.data])
+      setIsLoaded(true)
     })
     .catch((error) => {
       setError(error.message)
@@ -59,13 +67,23 @@ function SubredditData() {
   }
 
   const apiCallLoop = (subredditList) => {
+    if (data.length == threadList.length) {
+      setData([])
+    }
     subredditList.forEach(sub => {
       handleMakeApiCall(sub);
     });
   }
 
-  if (error) {
-    return <h1>Error: {error}</h1>;
+  if (tokenError) {
+    return (
+    <>
+      <h1>Authentication Error: {tokenError}</h1>;
+      <button onClick={() => u.getAuthToken}>Refresh Authentication Token</button>
+    </>
+    )
+  } else if (error) {
+    return <h1>API Error: {error}</h1>;
   } else {
     return (
       <React.Fragment>
