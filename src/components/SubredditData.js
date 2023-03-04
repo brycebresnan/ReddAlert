@@ -39,30 +39,30 @@ function SubredditData() {
   });  
     }, [])
 
-const handleMakeApiCall = (subreddit) => {
-  fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${token}`}})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    } else {
-      return response.json()
-    }
-  })
-  .then((jsonifiedResponse) => {
-      setData(prevArray  => [...prevArray, jsonifiedResponse.data])
+  const handleMakeApiCall = (subreddit) => {
+    fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${token}`}})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      } else {
+        return response.json()
+      }
+    })
+    .then((jsonifiedResponse) => {
+        setData(prevArray  => [...prevArray, jsonifiedResponse.data])
+        setIsLoaded(true)
+    })
+    .catch((error) => {
+      setError(error.message)
       setIsLoaded(true)
-  })
-  .catch((error) => {
-    setError(error.message)
-    setIsLoaded(true)
-  });
-}
+    });
+  }
 
-const apiCallLoop = (subredditList) => {
-  subredditList.forEach(sub => {
-    handleMakeApiCall(sub);
-  });
-}
+  const apiCallLoop = (subredditList) => {
+    subredditList.forEach(sub => {
+      handleMakeApiCall(sub);
+    });
+  }
 
   if (error) {
     return <h1>Error: {error}</h1>;
