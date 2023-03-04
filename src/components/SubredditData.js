@@ -49,7 +49,6 @@ const handleMakeApiCall = (subreddit) => {
     }
   })
   .then((jsonifiedResponse) => {
-    console.log(data)
       setData(prevArray  => [...prevArray, jsonifiedResponse.data])
       setIsLoaded(true)
   })
@@ -73,11 +72,11 @@ const apiCallLoop = (subredditList) => {
         <button onClick={() => apiCallLoop(threadList)}>Refresh API Call</button>
         <ul>
           {data.map((thread, index) => 
-            <li key={index}>
-              <h2>{thread["display_name"]}</h2>
-              <h3>Accounts Active: {thread["accounts_active"]}</h3>
-              <h3>Subscribers: {thread["subscribers"]}</h3>
-            </li>
+            <Thread displayName={thread.display_name}
+            accountsActive={thread.accounts_active}
+            subscribers={thread.subscribers}
+            id={index}
+            key={index}/>
           )}
         </ul>
       </React.Fragment>
