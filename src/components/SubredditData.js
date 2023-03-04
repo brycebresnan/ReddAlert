@@ -8,7 +8,7 @@ function SubredditData() {
   const [data, setData] = useState([]);
   const [token, setToken] = useState(null)
 
-  const subreddit = "cringe"
+  const threadList = ["cats"]
 
   useEffect(() => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
@@ -38,7 +38,7 @@ function SubredditData() {
   });  
     }, [])
 
-const handleMakeApiCallButton = (subreddit) => {
+const handleMakeApiCall = (subreddit) => {
   fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${token}`}})
   .then(response => {
     if (!response.ok) {
@@ -57,19 +57,24 @@ const handleMakeApiCallButton = (subreddit) => {
   });
 }
 
-  // if (error) {
-  //   return <h1>Error: {error}</h1>;
-  // } else if (!isLoaded) {
-  //   return <h1>...Loading...</h1>;
-  // } else {
+const apiCallLoop = (subredditList) => {
+  subredditList.forEach(sub => {
+    handleMakeApiCall(sub);
+  });
+}
+
+  if (error) {
+    return <h1>Error: {error}</h1>;
+  } else {
     return (
       <React.Fragment>
-        <button onClick={() => handleMakeApiCallButton(subreddit)}>Refresh API Call</button>
+        <button onClick={() => apiCallLoop(threadList)}>Refresh API Call</button>
         <h1>{data["display_name"]}</h1>
         <h3>Accounts Active: {data["accounts_active"]}</h3>
         <h3>Subscribers: {data["subscribers"]}</h3>
       </React.Fragment>
     );
   }
+}
 
 export default SubredditData;
