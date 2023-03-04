@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Thread from './Thread';
 import * as u from './utils'
 
 function SubredditData() {
@@ -8,7 +9,7 @@ function SubredditData() {
   const [data, setData] = useState([]);
   const [token, setToken] = useState(null)
 
-  const threadList = ["cats"]
+  const threadList = ["cats", "dogs", "brewing"]
 
   useEffect(() => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
@@ -48,7 +49,8 @@ const handleMakeApiCall = (subreddit) => {
     }
   })
   .then((jsonifiedResponse) => {
-      setData(jsonifiedResponse.data)
+    console.log(data)
+      setData(prevArray  => [...prevArray, jsonifiedResponse.data])
       setIsLoaded(true)
   })
   .catch((error) => {
@@ -69,9 +71,15 @@ const apiCallLoop = (subredditList) => {
     return (
       <React.Fragment>
         <button onClick={() => apiCallLoop(threadList)}>Refresh API Call</button>
-        <h1>{data["display_name"]}</h1>
-        <h3>Accounts Active: {data["accounts_active"]}</h3>
-        <h3>Subscribers: {data["subscribers"]}</h3>
+        <ul>
+          {data.map((thread, index) => 
+            <li key={index}>
+              <h2>{thread["display_name"]}</h2>
+              <h3>Accounts Active: {thread["accounts_active"]}</h3>
+              <h3>Subscribers: {thread["subscribers"]}</h3>
+            </li>
+          )}
+        </ul>
       </React.Fragment>
     );
   }
