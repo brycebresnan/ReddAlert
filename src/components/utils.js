@@ -1,6 +1,10 @@
-export async function getAuthToken() {
-  const encodedKey = btoa(`${REACT_APP_APP_ID}:${REACT_APP_SECRET}`)
+export function encodeKey() {
+  const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
+  return encodedKey
+}
 
+export async function getAuthToken(encodedKey) {
+  
   await fetch(`https://www.reddit.com/api/v1/access_token`, {
     method:"POST",
     headers: {
@@ -24,14 +28,16 @@ export async function getAuthToken() {
   .catch((error) => {
     return error.message
   });
+  
 }
 
 
-export async function apiCaller(subreddit, token) {
+export function apiCaller(subreddit, token) {
   if (token == null) {
     return "Please update Authentication token"
   }
-  await fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `bearer ${token}`}})
+
+  fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `bearer ${token}`}})
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status}: ${response.statusText}`);
@@ -39,12 +45,10 @@ export async function apiCaller(subreddit, token) {
         return response.json()
       }
     })
-  .then((jsonifiedResponse) => {
-      setData(jsonifiedResponse.data)
-      setIsLoaded(true)
+  .then((jsonifiedResponse) => {  
+    return jsonifiedResponse.data
     })
   .catch((error) => {
-    setError(error.message)
-    setIsLoaded(true)
+    return error.message
   });
 }
