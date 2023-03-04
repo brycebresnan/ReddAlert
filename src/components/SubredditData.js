@@ -70,15 +70,13 @@ const apiCallLoop = (subredditList) => {
     return (
       <React.Fragment>
         <button onClick={() => apiCallLoop(threadList)}>Refresh API Call</button>
-        <ul>
-          {data.map((thread, index) => 
+          {data.map((thread, index) =>
             <Thread displayName={thread.display_name}
             accountsActive={thread.accounts_active}
             subscribers={thread.subscribers}
             id={index}
             key={index}/>
           )}
-        </ul>
       </React.Fragment>
     );
   }
