@@ -47,11 +47,15 @@ function ThreadList(props) {
     return (
     <>
       <h1>Authentication Error: {tokenError}</h1>;
-
     </>
     )
   } else if (error) {
-    return <h1>API Error: {error}</h1>;
+    return (
+      <>
+        <h1>API Error: {error}</h1>;
+        <button onClick={() => apiCallLoop(props.threadList)}>Refresh API Call</button>
+      </>
+    );
   } else {
     return (
       <React.Fragment>
