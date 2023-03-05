@@ -57,7 +57,7 @@ function ThreadController() {
     currentlyVisisbleState = <NewThreadForm onNewThreadCreation={handleAddingNewThreadToList}/>
     buttonText = "Return to Thread List"
   } else {
-    currentlyVisisbleState = <ThreadList threadList={mainThreadList} />
+    currentlyVisisbleState = <ThreadList threadList={mainThreadList} token={token} />
     buttonText = "Add Thread"
   }
 
