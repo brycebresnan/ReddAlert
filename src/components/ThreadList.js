@@ -37,7 +37,7 @@ function ThreadList(props) {
       setData([])
     }
     subredditList.forEach(sub => {
-      handleMakeApiCall(sub);
+      handleMakeApiCall(sub.displayName);
     });
   }
 
@@ -71,18 +71,6 @@ function ThreadList(props) {
     );
   }
 
-  // return (
-  //   <React.Fragment>
-  //     {props.threadList.map((thread) => 
-  //       <Thread displayName={thread.displayName}
-  //         accountsActive={thread.accountsActive}
-  //         subscribers={thread.subscribers}
-  //         id={thread.id}
-  //         key={thread.id}/>
-  //       )}
-  //   </React.Fragment>
-
-  // );
 }
 
 ThreadList.propTypes = {

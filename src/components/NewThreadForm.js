@@ -6,7 +6,8 @@ function NewThreadForm(props){
 
   function handleNewThreadFormSubmission(event) {
     event.preventDefault();
-    props.onNewThreadCreation(event.target.subredditName.value);
+    props.onNewThreadCreation({
+      displayName: event.target.subredditName.value});
   }
 
   return (
