@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Thread from "./Thread";
 import PropTypes from "prop-types";
+import { v4 } from 'uuid';
 
 function ThreadList(props) {
   const [error, setError] = useState(null);
@@ -55,12 +56,12 @@ function ThreadList(props) {
     return (
       <React.Fragment>
         <button onClick={() => apiCallLoop(props.threadList)}>Refresh API Call</button>
-          {data.map((thread, index) =>
+          {data.map((thread) =>
             <Thread displayName={thread.display_name}
             accountsActive={thread.accounts_active}
             subscribers={thread.subscribers}
-            id={index}
-            key={index}/>
+            id={v4()}
+            key={v4()}/>
           )}
       </React.Fragment>
     );
