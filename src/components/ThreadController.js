@@ -63,8 +63,8 @@ function ThreadController() {
 
   return(
     <React.Fragment>
-      {currentlyVisisbleState}
       <button onClick={handleClick}>{buttonText}</button>
+      {currentlyVisisbleState}
     </React.Fragment>
   );
   
