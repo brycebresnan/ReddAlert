@@ -7,7 +7,9 @@ function NewThreadForm(props){
   function handleNewThreadFormSubmission(event) {
     event.preventDefault();
     props.onNewThreadCreation({
-      displayName: event.target.subredditName.value});
+      displayName: event.target.subredditName.value,
+      id: v4()
+    });
   }
 
   return (
