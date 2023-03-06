@@ -8,6 +8,10 @@ function NewThreadForm(props){
     event.preventDefault();
     props.onNewThreadCreation({
       displayName: event.target.subredditName.value,
+      accountsActive: null,
+      subcribers: null,
+      activeScore: null,
+      scoreThreshold: parseInt(event.target.threshold.value),
       id: v4()
     });
   }
@@ -15,10 +19,20 @@ function NewThreadForm(props){
   return (
     <React.Fragment>
       <form onSubmit={handleNewThreadFormSubmission}>
-        <input
-          type='text'
-          name='subredditName'
-          placeholder='Name of Subreddit...' />
+        <label>
+          Subreddit Name: <input
+            type='text'
+            name='subredditName'
+            required />
+        </label>
+        <br></br>
+        <label>
+          Active Threshold: <input
+            type='text'
+            name='threshold'
+            defaultValue="30" 
+            required />  *Default is 30
+        </label>    
         <button type='submit'>Add Subreddit</button>
       </form>
     </React.Fragment>
