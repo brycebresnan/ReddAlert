@@ -46,8 +46,8 @@ function ThreadController() {
 
 
   const handleAddingNewThreadToList = (newThread) => {
-    
     let newThreadObj = newThread;
+    console.log
 
     if (token == null) {
       setTokenError("Authentication Token missing or undefined")
@@ -68,7 +68,7 @@ function ThreadController() {
       newThreadObj.displayName = jsonifiedResponse.data.display_name;
       newThreadObj.subscribers = jsonifiedResponse.data.subscribers;
       newThreadObj.activeScore = calcActiveScore;
-      if (calcActiveScore >= newThreadObj.threshold){
+      if (calcActiveScore >= newThread.scoreThreshold){
         newThreadObj.isHot = true;
       }
       const newMainThreadList = mainThreadList.concat(newThreadObj); 

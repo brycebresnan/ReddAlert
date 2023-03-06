@@ -12,6 +12,8 @@ function ThreadList(props) {
             <Thread displayName={thread.displayName}
             accountsActive={thread.accountsActive}
             subscribers={thread.subscribers}
+            activeScore={thread.activeScore}
+            isHot={thread.isHot}
             id={thread.id}
             key={thread.id}/>
           )}
@@ -22,8 +24,7 @@ function ThreadList(props) {
 
 
 ThreadList.propTypes = {
-  threadList: PropTypes.array,
-  token: PropTypes.string,
+  threadList: PropTypes.array
 };
 
 export default ThreadList;

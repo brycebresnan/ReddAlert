@@ -3,13 +3,21 @@ import PropTypes from "prop-types";
 
 
 function Thread(props) {
-  const activeScore = (props.accountsActive / props.subscribers) * 10000
-  return (
+  const {displayName, subscribers, accountsActive, activeScore, isHot } = props;
+  
+  let hot = null
+
+  if (isHot == true) {
+    hot = "Hot!"
+  }
+
+  return(
     <React.Fragment>
-      <h3>Subreddit name: {props.displayName} </h3>
-      <h3>Members: {props.subscribers}</h3>
-      <h3>Online: {props.accountsActive}</h3>
+      <h3>Subreddit name: {displayName} </h3>
+      <h3>Members: {subscribers}</h3>
+      <h3>Online: {accountsActive}</h3>
       <h4>Active Score: {activeScore.toFixed(1)} </h4>
+      <h4>{hot}</h4>
       <br></br>
     </React.Fragment>
   );
@@ -19,6 +27,8 @@ Thread.propTypes = {
   displayName: PropTypes.string,
   subscribers: PropTypes.number,
   accountsActive: PropTypes.number,
+  activeScore: PropTypes.number,
+  isHot: PropTypes.bool,
   id: PropTypes.string
 }
 
