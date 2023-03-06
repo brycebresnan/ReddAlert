@@ -99,7 +99,6 @@ function ThreadController() {
   return(
     <React.Fragment>
       <button onClick={handleClick}>{buttonText}</button>
-      <button onClick={() => {console.log(mainThreadList)}}>check list</button>
       {currentlyVisisbleState}
     </React.Fragment>
   );
