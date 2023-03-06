@@ -9,9 +9,10 @@ function NewThreadForm(props){
     props.onNewThreadCreation({
       displayName: event.target.subredditName.value,
       accountsActive: null,
-      subcribers: null,
+      subscribers: null,
       activeScore: null,
       scoreThreshold: parseInt(event.target.threshold.value),
+      isHot: false,
       id: v4()
     });
   }
