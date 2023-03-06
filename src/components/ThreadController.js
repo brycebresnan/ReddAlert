@@ -8,6 +8,7 @@ function ThreadController() {
   const [mainThreadList, setMainThreadList] = useState([]);
   const [token, setToken] = useState(null);
   const [tokenError, setTokenError] = useState(null);
+  const [apiError, setApiError] = useState(null);
   
 
   useEffect(() => {
@@ -43,12 +44,45 @@ function ThreadController() {
     setFormVisibleOnPage(!formVisibleOnPage)
     };
 
-  
 
   const handleAddingNewThreadToList = (newThread) => {
-    const newMainThreadList = mainThreadList.concat(newThread); 
-    setMainThreadList(newMainThreadList);
-    setFormVisibleOnPage(false);
+    
+    let newThreadObj = newThread;
+
+    if (token == null) {
+      setTokenError("Authentication Token missing or undefined")
+      return
+    }
+    
+    fetch(`https://oauth.reddit.com/r/${newThreadObj.displayName}/about`, { headers: {Authorization: `Bearer ${token}`}})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      } else {
+        return response.json()
+      }
+    })
+    .then((jsonifiedResponse) => {
+      let calcActiveScore = (jsonifiedResponse.data.accounts_active / jsonifiedResponse.data.subscribers) * 10000;
+      newThreadObj.accountsActive = jsonifiedResponse.data.accounts_active;
+      newThreadObj.displayName = jsonifiedResponse.data.display_name;
+      newThreadObj.subscribers = jsonifiedResponse.data.subscribers;
+      newThreadObj.activeScore = calcActiveScore;
+      if (calcActiveScore >= newThreadObj.threshold){
+        newThreadObj.isHot = true;
+      }
+      const newMainThreadList = mainThreadList.concat(newThreadObj); 
+      setMainThreadList(newMainThreadList);
+      setFormVisibleOnPage(false);
+    })
+    .catch((error) => {
+      setApiError(error.message)
+      newThreadObj.error = error.message
+      const newMainThreadList = mainThreadList.concat(newThreadObj); 
+      setMainThreadList(newMainThreadList);
+      setFormVisibleOnPage(false);
+    });
+
   }
 
   let currentlyVisisbleState = null;
@@ -65,6 +99,7 @@ function ThreadController() {
   return(
     <React.Fragment>
       <button onClick={handleClick}>{buttonText}</button>
+      <button onClick={() => {console.log(mainThreadList)}}>check list</button>
       {currentlyVisisbleState}
     </React.Fragment>
   );
