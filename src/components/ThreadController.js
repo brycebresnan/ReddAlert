@@ -43,6 +43,7 @@ function ThreadController() {
     setFormVisibleOnPage(!formVisibleOnPage)
     };
 
+  
 
   const handleAddingNewThreadToList = (newThread) => {
     const newMainThreadList = mainThreadList.concat(newThread); 
