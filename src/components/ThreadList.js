@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { v4 } from 'uuid';
 
 function ThreadList(props) {
+  const { threadList, token } = props;
+
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [tokenError, setTokenError] = useState(null);
@@ -11,12 +13,12 @@ function ThreadList(props) {
   
 
   const handleMakeApiCall = (subreddit) => {
-    if (props.token == null) {
+    if (token == null) {
       setTokenError("Authentication Token missing or undefined")
       return
     }
     
-    fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${props.token}`}})
+    fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `Bearer ${token}`}})
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status}: ${response.statusText}`);
@@ -33,7 +35,7 @@ function ThreadList(props) {
   }
 
   const apiCallLoop = (subredditList) => {
-    if (data.length == props.threadList.length) {
+    if (data.length == threadList.length) {
       setData([])
     }
     subredditList.forEach(sub => {
@@ -60,12 +62,12 @@ function ThreadList(props) {
     return (
       <React.Fragment>
         <button onClick={() => apiCallLoop(props.threadList)}>Refresh API Call</button>
-          {data.map((thread) =>
-            <Thread displayName={thread.display_name}
-            accountsActive={thread.accounts_active}
+          {threadList.map((thread) =>
+            <Thread displayName={thread.displayName}
+            accountsActive={thread.accountsActive}
             subscribers={thread.subscribers}
-            id={v4()}
-            key={v4()}/>
+            id={thread.id}
+            key={thread.id}/>
           )}
       </React.Fragment>
     );
