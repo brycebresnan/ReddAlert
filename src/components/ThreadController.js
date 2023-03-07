@@ -13,7 +13,7 @@ function ThreadController() {
   const [apiError, setApiError] = useState(null);
   const [editing, setEditing] = useState(false);
   const [selectedThread, setSelectedThread] = useState(null);
-
+  const [timer, setTimer] = useState(true);
 
   useEffect(() => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
@@ -42,7 +42,17 @@ function ThreadController() {
       setTokenError(error.message)
     });
 
+    // handleTimer()
   },[])
+
+  const handleTimer = () => {
+    console.log(timer)
+    if (!timer) {
+      return
+    }
+    handleUpdateThreads()
+    setTimeout(handleTimer, 10000)
+  }
 
   const handleClick = () => {
     if (selectedThread != null) {
@@ -155,6 +165,7 @@ function ThreadController() {
   }
 
   const handleUpdateThreads = () => {
+    console.log('bang')
     if (mainThreadList.length == 0) {
       return
     }
@@ -165,8 +176,19 @@ function ThreadController() {
     });
   }
 
+  const handleTimerClick = () => {
+    setTimer(!timer)
+  }
+
   let currentlyVisibleState = null;
   let buttonText = null;
+  let timerStatus = null;
+
+  if (timer) {
+    timerStatus = "On"
+  } else {
+    timerStatus = "Off"
+  }
 
   if (editing) {
     currentlyVisibleState = <EditThreadForm thread={selectedThread} onEditThread={handleEditThread} />
@@ -189,6 +211,7 @@ function ThreadController() {
     <React.Fragment>
       <button onClick={handleClick}>{buttonText}</button>
       <button onClick={handleUpdateThreads}>Update Threads</button>
+      <button onClick={handleTimerClick}>{timerStatus}</button>
       {currentlyVisibleState}
     </React.Fragment>
   );
