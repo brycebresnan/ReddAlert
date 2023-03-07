@@ -41,8 +41,8 @@ function ThreadController() {
     .catch((error) => {
       setTokenError(error.message)
     });
-  },[])
 
+  },[])
 
   const handleClick = () => {
     if (selectedThread != null) {
@@ -155,6 +155,10 @@ function ThreadController() {
   }
 
   const handleUpdateThreads = () => {
+    if (mainThreadList.length == 0) {
+      return
+    }
+
     const threadListClone = mainThreadList
     threadListClone.forEach(thread => {
       handleEditThread(thread);
