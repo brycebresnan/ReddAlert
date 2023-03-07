@@ -44,10 +44,8 @@ function ThreadController() {
     setFormVisibleOnPage(!formVisibleOnPage)
     };
 
-
   const handleAddingNewThreadToList = (newThread) => {
     let newThreadObj = newThread;
-    console.log
 
     if (token == null) {
       setTokenError("Authentication Token missing or undefined")
