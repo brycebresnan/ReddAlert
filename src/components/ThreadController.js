@@ -1,6 +1,7 @@
 import ThreadList from "./ThreadList"
 import React, {useState, useEffect} from 'react';
 import NewThreadForm from "./NewThreadForm";
+import EditThreadForm from "./EditThreadForm";
 
 function ThreadController() {
 
@@ -9,7 +10,9 @@ function ThreadController() {
   const [token, setToken] = useState(null);
   const [tokenError, setTokenError] = useState(null);
   const [apiError, setApiError] = useState(null);
-  
+  const [editing, setEditing] = useState(false);
+  const [selectedThread, setSelectedThread] = useState(null);
+
 
   useEffect(() => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
@@ -38,7 +41,7 @@ function ThreadController() {
       setTokenError(error.message)
     });
   },[])
-  
+
 
   const handleClick = () => {
     setFormVisibleOnPage(!formVisibleOnPage)
@@ -80,24 +83,81 @@ function ThreadController() {
       setMainThreadList(newMainThreadList);
       setFormVisibleOnPage(false);
     });
-
   }
 
-  let currentlyVisisbleState = null;
+  const handleEditClick = () => {
+    setEditing(true);
+  }
+
+  const handleEditThread = (threadEdit) => {
+    let newThreadObj = threadEdit;
+
+    if (token == null) {
+      setTokenError("Authentication Token missing or undefined")
+      return
+    }
+    
+    fetch(`https://oauth.reddit.com/r/${newThreadObj.displayName}/about`, { headers: {Authorization: `Bearer ${token}`}})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      } else {
+        return response.json()
+      }
+    })
+    .then((jsonifiedResponse) => {
+      let calcActiveScore = (jsonifiedResponse.data.accounts_active / jsonifiedResponse.data.subscribers) * 10000;
+      newThreadObj.accountsActive = jsonifiedResponse.data.accounts_active;
+      newThreadObj.displayName = jsonifiedResponse.data.display_name;
+      newThreadObj.subscribers = jsonifiedResponse.data.subscribers;
+      newThreadObj.activeScore = calcActiveScore;
+      if (calcActiveScore >= threadEdit.scoreThreshold){
+        newThreadObj.isHot = true;
+      }
+      
+      const newMainThreadList = mainThreadList
+      .filter(thread => thread.id !== selectedThread.id)
+      .concat(newThreadObj); 
+      setMainThreadList(newMainThreadList);
+      setSelectedThread(null)
+      setFormVisibleOnPage(false);
+    })
+    .catch((error) => {
+      setApiError(error.message)
+      newThreadObj.error = error.message
+      const newMainThreadList = mainThreadList
+      .filter(thread => thread.id !== selectedThread.id)
+      .concat(newThreadObj); 
+      setMainThreadList(newMainThreadList);
+      setSelectedThread(null)
+      setFormVisibleOnPage(false);
+    });
+  }
+
+  
+  let currentlyVisibleState = null;
   let buttonText = null;
 
-  if (formVisibleOnPage) {
-    currentlyVisisbleState = <NewThreadForm onNewThreadCreation={handleAddingNewThreadToList}/>
+  if (editing) {
+    currentlyVisibleState = <EditThreadForm ticket = {selectedThread} onEditThread={handleEditThread} />
+    buttonText = "Return to Thread List";
+  } else if (selectedThread != null) {
+    currentlyVisibleState = <TicketDetial
+    ticket={selectedThread}
+    onClickingEdit={handleEditClick} />
+    buttonText = "Return to Thread List"
+  } else if (formVisibleOnPage) {
+    currentlyVisibleState = <NewThreadForm onNewThreadCreation={handleAddingNewThreadToList}/>
     buttonText = "Return to Thread List"
   } else {
-    currentlyVisisbleState = <ThreadList threadList={mainThreadList} token={token} />
+    currentlyVisibleState = <ThreadList threadList={mainThreadList} onThreadSelection={handleSelectingThread}/>
     buttonText = "Add Thread"
   }
 
   return(
     <React.Fragment>
       <button onClick={handleClick}>{buttonText}</button>
-      {currentlyVisisbleState}
+      {currentlyVisibleState}
     </React.Fragment>
   );
   
