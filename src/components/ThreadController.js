@@ -122,7 +122,7 @@ function ThreadController() {
       }
       
       const newMainThreadList = mainThreadList
-      .filter(thread => thread.id !== selectedThread.id)
+      .filter(thread => thread.id !== newThreadObj.id)
       .concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
     })
@@ -130,7 +130,7 @@ function ThreadController() {
       setApiError(error.message)
       newThreadObj.error = error.message
       const newMainThreadList = mainThreadList
-      .filter(thread => thread.id !== selectedThread.id)
+      .filter(thread => thread.id !== newThreadObj.id)
       .concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
     });
@@ -152,6 +152,13 @@ function ThreadController() {
       setSelectedThread(null)
       setFormVisibleOnPage(false)
     }
+  }
+
+  const handleUpdateThreads = () => {
+    const threadListClone = mainThreadList
+    threadListClone.forEach(thread => {
+      handleEditThread(thread);
+    });
   }
 
   let currentlyVisibleState = null;
@@ -177,6 +184,7 @@ function ThreadController() {
   return(
     <React.Fragment>
       <button onClick={handleClick}>{buttonText}</button>
+      <button onClick={handleUpdateThreads}>Update Threads</button>
       {currentlyVisibleState}
     </React.Fragment>
   );
