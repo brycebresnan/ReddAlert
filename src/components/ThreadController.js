@@ -45,7 +45,12 @@ function ThreadController() {
 
 
   const handleClick = () => {
+    if (selectedThread != null) {
+      setFormVisibleOnPage(false)
+      setSelectedThread(null)
+    } else {
     setFormVisibleOnPage(!formVisibleOnPage)
+    }
     };
 
   const handleAddingNewThreadToList = (newThread) => {
