@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 function EditThreadForm(props){
   const {thread, onEditThread } = props;
+  // const prevName = thread.displayName;
 
   function handleEditThreadFormSubmission(event) {
     event.preventDefault();
@@ -24,7 +25,7 @@ function EditThreadForm(props){
           Subreddit Name: <input
             type='text'
             name='subredditName'
-            defaultValue={thread.displayName} 
+            // defaultValue={prevName} 
             required />
         </label>
         <br></br>
@@ -32,7 +33,7 @@ function EditThreadForm(props){
           Active Threshold: <input
             type='text'
             name='threshold'
-            defaultValue={thread.scoreThreshold}  
+            // defaultValue={thread.scoreThreshold}  
             required /> 
         </label>    
         <button type='submit'>Update</button>
