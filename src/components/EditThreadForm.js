@@ -25,7 +25,7 @@ function EditThreadForm(props){
           Subreddit Name: <input
             type='text'
             name='subredditName'
-            // defaultValue={prevName} 
+            defaultValue={thread.displayName} 
             required />
         </label>
         <br></br>
@@ -33,7 +33,7 @@ function EditThreadForm(props){
           Active Threshold: <input
             type='text'
             name='threshold'
-            // defaultValue={thread.scoreThreshold}  
+            defaultValue={thread.scoreThreshold}  
             required /> 
         </label>    
         <button type='submit'>Update</button>
