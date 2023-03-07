@@ -21,8 +21,8 @@ function ThreadDetail(props) {
       <h3>Active Score: {thread.activeScore.toFixed(1)} </h3>
       <h3>Is it Hot? {isItHot} </h3>
 
-      <button onClick={onClickingEdit}>Settings</button>
-      <button onClick={() => onClickingDelete(thread.id)}>Delete</button>
+      <button onClick={onClickingEdit}>Edit Settings</button>
+      <button onClick={() => onClickingDelete(thread.displayName, thread.id)}>Delete</button>
     </>
   )
 }

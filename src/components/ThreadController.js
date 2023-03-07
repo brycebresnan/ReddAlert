@@ -145,6 +145,15 @@ function ThreadController() {
     setSelectedThread(selectedThread)
   }
 
+  const handleDeleteThread = (threadName, id) => {
+    if (confirm(`Are you sure you want to delete ${threadName}?`)) {
+      const updatedThreadList = mainThreadList.filter(thread => thread.id !== id)
+      setMainThreadList(updatedThreadList)
+      setSelectedThread(null)
+      setFormVisibleOnPage(false)
+    }
+  }
+
   let currentlyVisibleState = null;
   let buttonText = null;
 
@@ -154,7 +163,8 @@ function ThreadController() {
   } else if (selectedThread != null) {
     currentlyVisibleState = <ThreadDetail
     thread={selectedThread}
-    onClickingEdit={handleEditClick} />
+    onClickingEdit={handleEditClick} 
+    onClickingDelete={handleDeleteThread}/>
     buttonText = "Return to Thread List"
   } else if (formVisibleOnPage) {
     currentlyVisibleState = <NewThreadForm onNewThreadCreation={handleAddingNewThreadToList}/>
