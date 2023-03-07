@@ -12,6 +12,7 @@ function ThreadDetail(props) {
 
   return(
     <>
+      <h2>Details: </h2>
       <h3>{thread.error}</h3>
       <h3>Subreddit name: {thread.displayName} </h3>
       <h3>Members: {thread.subscribers}</h3>
