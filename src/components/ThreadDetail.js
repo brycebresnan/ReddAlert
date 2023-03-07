@@ -2,30 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function ThreadDetail(props) {
-  const {displayName, subscribers, accountsActive, activeScore, isHot, id } = props;
+  const {thread, onClickingEdit, onClickingDelete } = props;
+
+  let isItHot = "No";
+
+  if (thread.isHot) {
+    isItHot = "Yes"
+  } 
 
   return(
     <>
-      <h3>Subreddit name: {displayName} </h3>
-      <h3>Members: {subscribers}</h3>
-      <h3>Online: {accountsActive}</h3>
-      <h4>Active Score: {activeScore.toFixed(1)} </h4>
-      <h4>Is it Hot? {isHot}</h4>
-      <button onClcik={onClickingThreadSettings}>Settings</button>
-      <button onClick={() => onClickingDelete(id)}>Delete</button>
+      <h3>{thread.error}</h3>
+      <h3>Subreddit name: {thread.displayName} </h3>
+      <h3>Members: {thread.subscribers}</h3>
+      <h3>Online: {thread.accountsActive}</h3>
+      <h3>Set Threshold: {thread.scoreThreshold}</h3>
+      <h3>Active Score: {thread.activeScore.toFixed(1)} </h3>
+      <h3>Is it Hot? {isItHot} </h3>
+
+      <button onClick={onClickingEdit}>Settings</button>
+      <button onClick={() => onClickingDelete(thread.id)}>Delete</button>
     </>
   )
 }
 
 ThreadDetail.propTypes = {
-  displayName: PropTypes.string,
-  subscribers: PropTypes.number,
-  accountsActive: PropTypes.number,
-  activeScore: PropTypes.number,
-  isHot: PropTypes.bool,
-  id: PropTypes.string,
+  thread: PropTypes.object,
   onClickingDelete: PropTypes.func,
-  onClickingThreadSettings: PropTypes.func 
+  onClickingEdit: PropTypes.func 
 };
 
 export default ThreadDetail;

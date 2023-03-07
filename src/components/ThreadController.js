@@ -2,6 +2,7 @@ import ThreadList from "./ThreadList"
 import React, {useState, useEffect} from 'react';
 import NewThreadForm from "./NewThreadForm";
 import EditThreadForm from "./EditThreadForm";
+import ThreadDetail from "./ThreadDetail";
 
 function ThreadController() {
 
@@ -119,8 +120,6 @@ function ThreadController() {
       .filter(thread => thread.id !== selectedThread.id)
       .concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
-      setSelectedThread(null)
-      setFormVisibleOnPage(false);
     })
     .catch((error) => {
       setApiError(error.message)
@@ -129,21 +128,27 @@ function ThreadController() {
       .filter(thread => thread.id !== selectedThread.id)
       .concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
-      setSelectedThread(null)
-      setFormVisibleOnPage(false);
     });
+
+    setSelectedThread(null);
+    setFormVisibleOnPage(false);
+    setEditing(false)    
   }
 
-  
+  const handleSelectingThread = (id) => {
+    const selectedThread = mainThreadList.filter(thread => thread.id === id)[0];
+    setSelectedThread(selectedThread)
+  }
+
   let currentlyVisibleState = null;
   let buttonText = null;
 
   if (editing) {
-    currentlyVisibleState = <EditThreadForm ticket = {selectedThread} onEditThread={handleEditThread} />
+    currentlyVisibleState = <EditThreadForm thread={selectedThread} onEditThread={handleEditThread} />
     buttonText = "Return to Thread List";
   } else if (selectedThread != null) {
-    currentlyVisibleState = <TicketDetial
-    ticket={selectedThread}
+    currentlyVisibleState = <ThreadDetail
+    thread={selectedThread}
     onClickingEdit={handleEditClick} />
     buttonText = "Return to Thread List"
   } else if (formVisibleOnPage) {

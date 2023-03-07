@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import Thread from "./Thread";
 import PropTypes from "prop-types";
-import { v4 } from 'uuid';
 
 function ThreadList(props) {
-  const { threadList } = props;
+  const { threadList, onThreadSelection } = props;
 
     return (
       <React.Fragment>
           {threadList.map((thread) =>
-            <Thread displayName={thread.displayName}
+            <Thread 
+            whenThreadSelected={onThreadSelection}
+            displayName={thread.displayName}
             accountsActive={thread.accountsActive}
             subscribers={thread.subscribers}
             activeScore={thread.activeScore}
@@ -24,7 +25,8 @@ function ThreadList(props) {
 
 
 ThreadList.propTypes = {
-  threadList: PropTypes.array
+  threadList: PropTypes.array,
+  onThreadSelection: PropTypes.func
 };
 
 export default ThreadList;
