@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import NewThreadForm from "./NewThreadForm";
 import EditThreadForm from "./EditThreadForm";
 import ThreadDetail from "./ThreadDetail";
+import * as util from "./utils";
 
 function ThreadController() {
 
@@ -23,7 +24,8 @@ function ThreadController() {
   },[])
 
   const handleGetAuthToken = () => {
-    const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
+    // const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
+    const encodedKey = util.encodeKey();
 
     fetch(`https://www.reddit.com/api/v1/access_token`, {
       method:"POST",
