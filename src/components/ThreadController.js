@@ -13,9 +13,16 @@ function ThreadController() {
   const [apiError, setApiError] = useState(null);
   const [editing, setEditing] = useState(false);
   const [selectedThread, setSelectedThread] = useState(null);
-  const [timer, setTimer] = useState(true);
+  const [timer, setTimer] = useState(false);
+  const [invervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
+    if (token == null) {
+      handleGetAuthToken()
+    }
+  },[])
+
+  const handleGetAuthToken = () => {
     const encodedKey = btoa(`${process.env.REACT_APP_APP_ID}:${process.env.REACT_APP_SECRET}`)
 
     fetch(`https://www.reddit.com/api/v1/access_token`, {
@@ -41,17 +48,11 @@ function ThreadController() {
     .catch((error) => {
       setTokenError(error.message)
     });
-
-    // handleTimer()
-  },[])
+  } 
 
   const handleTimer = () => {
-    console.log(timer)
-    if (!timer) {
-      return
-    }
-    handleUpdateThreads()
-    setTimeout(handleTimer, 10000)
+    const timerInverval = setInterval(handleUpdateThreads, 5000)
+    setIntervalId(timerInverval)
   }
 
   const handleClick = () => {
@@ -177,7 +178,13 @@ function ThreadController() {
   }
 
   const handleTimerClick = () => {
-    setTimer(!timer)
+    if (timer == true) {
+      setTimer(false);
+      clearInterval(invervalId);
+    } else {
+      setTimer(true);
+      handleTimer();
+    }
   }
 
   let currentlyVisibleState = null;
@@ -185,9 +192,9 @@ function ThreadController() {
   let timerStatus = null;
 
   if (timer) {
-    timerStatus = "On"
+    timerStatus = "Timer On"
   } else {
-    timerStatus = "Off"
+    timerStatus = "Timer Off"
   }
 
   if (editing) {
