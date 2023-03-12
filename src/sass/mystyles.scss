@@ -17,8 +17,6 @@ $family-sans-serif: "Gotham Light", sans-serif;
 // $grey-light: $beige-light;
 // $primary: $purple;
 $link: rgb(255, 51, 0);
-$widescreen-enabled: false;
-$fullhd-enabled: false;
 
 // Update some of Bulma's component variables
 $body-background-color: rgb(24, 26, 27);
@@ -32,6 +30,8 @@ $label-color:  rgb(209, 205, 199);
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
+$section-padding: 2rem 1rem;
+$section-padding-desktop: 1.5rem 1.5rem;
 
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
@@ -45,3 +45,4 @@ $input-shadow: none;
 @import "../../node_modules/bulma/sass/layout/section.sass";
 @import "../../node_modules/bulma/sass/elements/box.sass";
 @import "../../node_modules/bulma/sass/elements/content.sass";
+@import "../../node_modules/bulma/sass/layout/section.sass";

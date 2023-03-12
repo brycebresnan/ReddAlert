@@ -11,16 +11,18 @@ function Thread(props) {
 
 
   return(
-    <React.Fragment>
+    <React.Fragment> 
       <div onClick = {() => whenThreadSelected(id)}>
-        <Box>
-          <Content>
-            <p>Subreddit name: {displayName} </p>
-            <p>Members: {subscribers}</p>
-            <p>Online: {accountsActive}</p>
-            <h4>Active Score: {activeScore.toFixed(1)} {isHot ? <GiSiren />: null }</h4>    
-          </Content>
-        </Box>
+        <Tile >
+          <Box>
+            <Content>
+              <h4>{displayName}  {isHot ? <GiSiren />: null }</h4>
+              <p>Members: {subscribers}</p>
+              <p>Online: {accountsActive}</p>
+              <h6>Active Score: {activeScore.toFixed(1)}</h6>    
+            </Content>
+          </Box>
+        </Tile>
       </div>
     </React.Fragment>
   );

@@ -220,12 +220,12 @@ function ThreadController() {
   return(
     <React.Fragment>
       <Section>
-        <button onClick={handleClick}>{buttonText}</button>
-        <button onClick={handleUpdateThreads}>Update Threads</button>
-        <button onClick={handleTimerClick}>{timerStatus}</button>
+      <button onClick={handleClick}>{buttonText}</button>
+      <button onClick={handleUpdateThreads}>Update Threads</button>
+      <button onClick={handleTimerClick}>{timerStatus}</button>
       </Section>
       <Section>
-        {currentlyVisibleState}
+      {currentlyVisibleState}
       </Section>
     </React.Fragment>
   );
