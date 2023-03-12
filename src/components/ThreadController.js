@@ -54,9 +54,17 @@ function ThreadController() {
     });
   } 
 
-  const handleTimer = () => {
+  const handleStartTimer = () => {
     const timerInverval = setInterval(handleUpdateThreads, 5000)
     setIntervalId(timerInverval)
+  }
+
+  const handleTimerApiCall = () => {
+    fetch( 'http://localhost:3001/timer' )
+    .then( response => response.json() )
+    .then( jsonifiedResponse => {
+      console.log(jsonifiedResponse)
+    } );
   }
 
   const handleClick = () => {
@@ -96,6 +104,7 @@ function ThreadController() {
       const newMainThreadList = mainThreadList.concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
       setFormVisibleOnPage(false);
+      handleSendListToTimerApi(newMainThreadList);
     })
     .catch((error) => {
       setApiError(error.message)
@@ -140,6 +149,7 @@ function ThreadController() {
       .filter(thread => thread.id !== newThreadObj.id)
       .concat(newThreadObj); 
       setMainThreadList(newMainThreadList);
+      handleSendListToTimerApi(newMainThreadList);
     })
     .catch((error) => {
       setApiError(error.message)
@@ -164,6 +174,7 @@ function ThreadController() {
     if (confirm(`Are you sure you want to delete ${threadName}?`)) {
       const updatedThreadList = mainThreadList.filter(thread => thread.id !== id)
       setMainThreadList(updatedThreadList)
+      handleSendListToTimerApi(updatedThreadList)
       setSelectedThread(null)
       setFormVisibleOnPage(false)
     }
@@ -184,10 +195,39 @@ function ThreadController() {
     if (timer == true) {
       setTimer(false);
       clearInterval(invervalId);
+      handleTimerApiCall();
     } else {
       setTimer(true);
-      handleTimer();
+      handleStartTimer();
+      handleTimerApiCall();
     }
+  }
+
+  const handleSendListToTimerApi = (threadList=mainThreadList) => {
+    if (threadList.length == 0) {
+      return
+    }
+
+    const data = {threadList}
+    const stringifiedData = JSON.stringify(data)
+    console.log(stringifiedData)
+    fetch(`http://localhost:3001/timer`, {
+      method:"POST",
+      body: stringifiedData,
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      } else {
+        return response.json()
+      }
+    })
+    .then(jsonifiedResponse => {
+      console.log(jsonifiedResponse)
+    })
   }
 
   let currentlyVisibleState = null;
@@ -216,6 +256,7 @@ function ThreadController() {
         <button onClick={handleClick}>{buttonText}</button>
         <button onClick={handleUpdateThreads}>Update Threads</button>
         <button onClick={handleTimerClick}>{!timer ? "Timer Off" : "Timer On"}</button>
+        <button onClick={() => handleSendListToTimerApi(mainThreadList)}>Send List</button>
       </Section>
       <Section>
         {currentlyVisibleState}
