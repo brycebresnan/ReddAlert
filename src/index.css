@@ -23,7 +23,7 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 450;
   transition-duration: 0.4s;
   margin: 6px;
 }
@@ -31,9 +31,4 @@ button {
 button:hover {
   background-color: rgb(253, 68, 22);
   color: rgb(230, 226, 220);
-}
-
-
-#resultsName {
-  color: rgb(255, 139, 45);
 }
