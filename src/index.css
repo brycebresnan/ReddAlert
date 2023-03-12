@@ -24,24 +24,24 @@ h4 {
   color: rgb(253, 68, 22);
 }
 
-img {
-  max-width: 70%;
-  height: auto;
+button {
+  background-color: #a8a8a8; /* Green */
+  border: none;
+  color: rgb(24, 26, 27);
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  margin: 6px;
 }
 
-.btn {
-  font-weight: bold;
-  background-color: rgb(163, 163, 163);
+button:hover {
+  background-color: rgb(253, 68, 22);
+  color: rgb(230, 226, 220);
 }
 
-.btn:hover {
-  color: rgb(48, 48, 48);
-  color: rgb(255, 51, 0);
-}
-
-hr {
-  border-top: 1px solid rgba(255, 255, 255, 0.676);
-}
 
 #resultsName {
   color: rgb(255, 139, 45);
