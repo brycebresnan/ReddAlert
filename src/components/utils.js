@@ -17,21 +17,3 @@ export async function getAuthToken(encodedKey) {
     })
   );
 }
-
-
-// export async function apiCaller(subreddit, token) {
-//   if (token == null) {
-//     return "Please update Authentication token"
-//   }
-
-//   return (
-//     fetch(`https://oauth.reddit.com/r/${subreddit}/about`, { headers: {Authorization: `bearer ${token}`}})
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error(`${response.status}: ${response.statusText}`);
-//       } else {
-//         return response.json()
-//       }
-//     })
-//   );  
-// }

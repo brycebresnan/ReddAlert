@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 } from 'uuid';
 import PropTypes from "prop-types";
-import { Content , Section, Form, Box} from "react-bulma-components";
+import { Form, Box} from "react-bulma-components";
 
 
 function NewThreadForm(props){

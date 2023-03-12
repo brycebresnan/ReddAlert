@@ -34,7 +34,6 @@ function ThreadList(props) {
   }
 
 
-
 ThreadList.propTypes = {
   threadList: PropTypes.array,
   onThreadSelection: PropTypes.func

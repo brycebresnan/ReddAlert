@@ -47,21 +47,6 @@ function EditThreadForm(props){
               </Form.Control>
             </Form.Field>
             <br></br>    
-          {/* <label>
-            Subreddit Name: <input
-              type='text'
-              name='subredditName'
-              defaultValue={thread.displayName} 
-              required />
-          </label>
-          <br></br>
-          <label>
-            Active Threshold: <input
-              type='text'
-              name='threshold'
-              defaultValue={thread.scoreThreshold}  
-              required /> 
-          </label>     */}
           <button type='submit'>Update</button>
         </form>
       </Box>

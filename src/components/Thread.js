@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import {GiSiren} from "react-icons/gi" 
 import { Content, Tile, Box } from "react-bulma-components";
 
-
-
-
 function Thread(props) {
   const {displayName, subscribers, accountsActive, activeScore, isHot, id, whenThreadSelected} = props;
 
