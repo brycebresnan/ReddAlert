@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {GiSiren} from "react-icons/gi" 
 
 
 function Thread(props) {
   const {displayName, subscribers, accountsActive, activeScore, isHot, id, whenThreadSelected} = props;
-  
-  let hot = null
 
-  if (isHot == true) {
-    hot = "Hot!"
-  }
 
   return(
     <React.Fragment>
@@ -17,8 +13,8 @@ function Thread(props) {
         <h3>Subreddit name: {displayName} </h3>
         <h3>Members: {subscribers}</h3>
         <h3>Online: {accountsActive}</h3>
-        <h4>Active Score: {activeScore.toFixed(1)} </h4>
-        <h4>{hot}</h4>
+        <h4>Active Score: {activeScore.toFixed(1)} {isHot ? <h1><GiSiren /></h1>: null }</h4>
+        
       </div>
       <br></br>
     </React.Fragment>
