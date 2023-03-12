@@ -192,13 +192,6 @@ function ThreadController() {
 
   let currentlyVisibleState = null;
   let buttonText = null;
-  let timerStatus = null;
-
-  if (timer) {
-    timerStatus = "Timer On"
-  } else {
-    timerStatus = "Timer Off"
-  }
 
   if (editing) {
     currentlyVisibleState = <EditThreadForm thread={selectedThread} onEditThread={handleEditThread} />
@@ -222,7 +215,7 @@ function ThreadController() {
       <Section>
         <button onClick={handleClick}>{buttonText}</button>
         <button onClick={handleUpdateThreads}>Update Threads</button>
-        <button onClick={handleTimerClick}>{timerStatus}</button>
+        <button onClick={handleTimerClick}>{!timer ? "Timer Off" : "Timer On"}</button>
       </Section>
       <Section>
         {currentlyVisibleState}
