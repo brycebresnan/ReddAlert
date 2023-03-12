@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Box, Form } from "react-bulma-components";
+
+
 
 function EditThreadForm(props){
   const {thread, onEditThread } = props;
@@ -20,24 +23,48 @@ function EditThreadForm(props){
 
   return (
     <React.Fragment>
-      <form onSubmit={handleEditThreadFormSubmission}>
-        <label>
-          Subreddit Name: <input
-            type='text'
-            name='subredditName'
-            defaultValue={thread.displayName} 
-            required />
-        </label>
-        <br></br>
-        <label>
-          Active Threshold: <input
-            type='text'
-            name='threshold'
-            defaultValue={thread.scoreThreshold}  
-            required /> 
-        </label>    
-        <button type='submit'>Update</button>
-      </form>
+      <Box>
+        <form onSubmit={handleEditThreadFormSubmission}>
+        <Form.Field>
+              <Form.Label>Subreddit Name: </Form.Label>
+              <Form.Control>
+                <Form.Input
+                  name='subredditName'
+                  defaultValue={thread.displayName} 
+                  required
+                />
+              </Form.Control>
+            </Form.Field>
+
+            <Form.Field>
+              <Form.Label>Active Threshold: </Form.Label>
+              <Form.Control>
+                <Form.Input
+                  name='threshold'
+                  defaultValue={thread.scoreThreshold}
+                  required
+                />
+              </Form.Control>
+            </Form.Field>
+            <br></br>    
+          {/* <label>
+            Subreddit Name: <input
+              type='text'
+              name='subredditName'
+              defaultValue={thread.displayName} 
+              required />
+          </label>
+          <br></br>
+          <label>
+            Active Threshold: <input
+              type='text'
+              name='threshold'
+              defaultValue={thread.scoreThreshold}  
+              required /> 
+          </label>     */}
+          <button type='submit'>Update</button>
+        </form>
+      </Box>
     </React.Fragment>
   );
 }

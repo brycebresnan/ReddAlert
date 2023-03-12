@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {GiSiren} from "react-icons/gi" 
+import { Content, Tile, Box } from "react-bulma-components";
+
+
 
 
 function Thread(props) {
@@ -10,13 +13,15 @@ function Thread(props) {
   return(
     <React.Fragment>
       <div onClick = {() => whenThreadSelected(id)}>
-        <h3>Subreddit name: {displayName} </h3>
-        <h3>Members: {subscribers}</h3>
-        <h3>Online: {accountsActive}</h3>
-        <h4>Active Score: {activeScore.toFixed(1)} {isHot ? <h1><GiSiren /></h1>: null }</h4>
-        
+        <Box>
+          <Content>
+            <p>Subreddit name: {displayName} </p>
+            <p>Members: {subscribers}</p>
+            <p>Online: {accountsActive}</p>
+            <h4>Active Score: {activeScore.toFixed(1)} {isHot ? <GiSiren />: null }</h4>    
+          </Content>
+        </Box>
       </div>
-      <br></br>
     </React.Fragment>
   );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import { v4 } from 'uuid';
 import PropTypes from "prop-types";
+import { Content , Section, Form, Box} from "react-bulma-components";
+
 
 function NewThreadForm(props){
 
@@ -19,23 +21,33 @@ function NewThreadForm(props){
 
   return (
     <React.Fragment>
-      <form onSubmit={handleNewThreadFormSubmission}>
-        <label>
-          Subreddit Name: <input
-            type='text'
-            name='subredditName'
-            required />
-        </label>
-        <br></br>
-        <label>
-          Active Threshold: <input
-            type='text'
-            name='threshold'
-            defaultValue="30" 
-            required />  *Default is 30
-        </label>    
-        <button type='submit'>Add Subreddit</button>
-      </form>
+      <Box>
+          <form onSubmit={handleNewThreadFormSubmission}>
+            <Form.Field>
+              <Form.Label>Subreddit Name: </Form.Label>
+              <Form.Control>
+                <Form.Input
+                  name='subredditName'
+                  required
+                />
+              </Form.Control>
+            </Form.Field>
+
+            <Form.Field>
+              <Form.Label>Active Threshold: </Form.Label>
+              <Form.Control>
+                <Form.Input
+                  name='threshold'
+                  defaultValue='20'
+                  required
+                />
+              </Form.Control>
+              <p>*Default is 20</p>
+            </Form.Field>
+            <br></br>    
+            <button type='submit'>Add Subreddit</button>
+          </form>
+      </Box>
     </React.Fragment>
   );
 }

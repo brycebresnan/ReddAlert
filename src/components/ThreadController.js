@@ -4,6 +4,8 @@ import NewThreadForm from "./NewThreadForm";
 import EditThreadForm from "./EditThreadForm";
 import ThreadDetail from "./ThreadDetail";
 import * as util from "./utils";
+import { Section } from "react-bulma-components";
+
 
 function ThreadController() {
 
@@ -168,7 +170,6 @@ function ThreadController() {
   }
 
   const handleUpdateThreads = () => {
-    console.log('bang')
     if (mainThreadList.length == 0) {
       return
     }
@@ -218,10 +219,14 @@ function ThreadController() {
 
   return(
     <React.Fragment>
-      <button onClick={handleClick}>{buttonText}</button>
-      <button onClick={handleUpdateThreads}>Update Threads</button>
-      <button onClick={handleTimerClick}>{timerStatus}</button>
-      {currentlyVisibleState}
+      <Section>
+        <button onClick={handleClick}>{buttonText}</button>
+        <button onClick={handleUpdateThreads}>Update Threads</button>
+        <button onClick={handleTimerClick}>{timerStatus}</button>
+      </Section>
+      <Section>
+        {currentlyVisibleState}
+      </Section>
     </React.Fragment>
   );
   

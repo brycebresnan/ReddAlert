@@ -8,9 +8,7 @@ function Header(){
     <React.Fragment>
       <Hero>
         <Hero.Body>
-          <Heading size={1}>
             <h1>ReddAlert<GiSiren/></h1>
-          </Heading>
         </Hero.Body>
       </Hero>
     </React.Fragment>
